@@ -1,32 +1,39 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <SideBar></SideBar>
+        <div class="right-container" :class="{'collapse-ml': isCollapse}">
+            <TopBar></TopBar>
+            <router-view />
+        </div>
   </div>
 </template>
+<script>
+import { mapState } from "vuex";
+import TopBar from "./components/topBar";
+import SideBar from "./components/sideBar";
+export default {
+  computed: {
+    ...mapState({
+      isCollapse: (state) => state.isCollapse,
+    }),
+  },
+  components: {
+    SideBar,
+    TopBar
+  },
+};
+</script>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+<style lang="less" scoped>
+.right-container{
+    width: calc(100% - 180px);
+    height: 100%;
+    margin-left: 180px;
+    transition: 0.28s;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.collapse-ml{
+    width: calc(100% - 64px);
+    margin-left: 64px;
 }
 </style>
